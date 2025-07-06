@@ -3,9 +3,13 @@ import { ErrorBanner } from './errorBanner'
 import { useRequest } from '~/hooks/useRequest'
 import type { Movie } from '~/types'
 
-export function RecommendedMovies() {
+type MovieParams = {
+  movieId: string
+}
+
+export function RecommendedMovies({ movieId }: MovieParams) {
   const { state, error, data } =
-    useRequest<Array<Movie>>(`/api/recommendations`)
+    useRequest<Array<Movie>>(`/api/recommendations?movieId=${movieId}`)
 
   if (state === 'idle' || (state === 'done' && data == null && error == null)) {
     return null

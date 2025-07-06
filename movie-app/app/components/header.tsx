@@ -1,7 +1,6 @@
 import { Link } from '@remix-run/react'
 import { HiMagnifyingGlass as SearchIcon } from 'react-icons/hi2'
 import { OuterGrid } from './outerGrid'
-import { Container } from './container'
 
 export function Header() {
   return (
