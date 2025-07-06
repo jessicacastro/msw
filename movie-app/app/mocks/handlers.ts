@@ -1,4 +1,4 @@
-import { delay, http, HttpResponse } from "msw";
+import { delay, http, HttpResponse, passthrough } from "msw";
 import { movies } from "./data";
 import { graphqlHandlers } from "./graphqlHandlers";
 
@@ -47,6 +47,7 @@ const clientHandlers = [
 
     const movieIdForErrorResponse = movies[9].id;
     const movieForNetworkErrorResponse = movies[0].id;
+    const movieIdForPassThroughResponse = movies[1].id;
     const movieId = url.searchParams.get("movieId");
 
     // // await delay(3000);
@@ -57,6 +58,10 @@ const clientHandlers = [
         { error: "Movie ID is required" },
         { status: 400 }
       );
+    }
+
+    if (movieId === movieIdForPassThroughResponse) {
+      return passthrough();
     }
 
     if (movieForNetworkErrorResponse === movieId) {

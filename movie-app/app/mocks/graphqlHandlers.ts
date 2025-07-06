@@ -3,7 +3,21 @@ import { graphql as executeGraphQL } from "graphql";
 import { movies } from "./data";
 import { graphSchema as schema } from "./graphSchemas";
 
+const customService = graphql.link("https://api.example.com/review-service");
+
 export const graphqlHandlers = [
+  customService.query("ListReviews", async ({ query, variables }) => {
+    return HttpResponse.json({
+      data: {
+        serviceReviews: [
+          {
+            id: "45e41b3e-a99e-4257-a588-d692210d3c49",
+            message: "This is a review from the custom service",
+          },
+        ],
+      },
+    });
+  }),
   graphql.operation(async ({ query, variables }) => {
     const { data, errors } = await executeGraphQL({
       schema,
